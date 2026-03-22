@@ -1,204 +1,674 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manas Portfolio Website</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manas Ohara - Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg:              #ffffff;
+    --bg2:             #f7f6f3;
+    --bg3:             #efede9;
+    --border:          rgba(0,0,0,0.09);
+    --text:            #1a1917;
+    --muted:           #6b6864;
+    --accent:          #9a6f2e;
+    --accent2:         #2d7a63;
+    --tamu:            #500000;
+    --tag-bg:          rgba(154,111,46,0.09);
+    --tag-text:        #7a5520;
+    --tag-teal-bg:     rgba(45,122,99,0.08);
+    --tag-teal-text:   #1f5e48;
+    --nav-bg:          rgba(255,255,255,0.90);
+    --btn-primary-bg:  #9a6f2e;
+    --btn-primary-txt: #ffffff;
+  }
+
+  [data-theme="dark"] {
+    --bg:              #0e0e0f;
+    --bg2:             #161618;
+    --bg3:             #1e1e21;
+    --border:          rgba(255,255,255,0.08);
+    --text:            #f0ede8;
+    --muted:           #8a8780;
+    --accent:          #c8a96e;
+    --accent2:         #7eb8a4;
+    --tamu:            #e05555;
+    --tag-bg:          rgba(200,169,110,0.12);
+    --tag-text:        #c8a96e;
+    --tag-teal-bg:     rgba(126,184,164,0.10);
+    --tag-teal-text:   #7eb8a4;
+    --nav-bg:          rgba(14,14,15,0.90);
+    --btn-primary-bg:  #c8a96e;
+    --btn-primary-txt: #0e0e0f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
+    font-size: 15px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Merriweather', serif;
+    font-size: 1rem;
+    color: var(--tamu);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* TOGGLE */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0.3rem 0.7rem;
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: border-color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+  .toggle-icon { font-size: 0.88rem; line-height: 1; transition: opacity 0.25s; }
+  .sun  { opacity: 1; }
+  .moon { opacity: 0.32; }
+  [data-theme="dark"] .sun  { opacity: 0.32; }
+  [data-theme="dark"] .moon { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 7rem 2.5rem 4rem;
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .hero-inner {
+    width: 100%; display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem; align-items: center;
+  }
+
+  .hero-greeting {
+    font-family: 'DM Mono', monospace; font-size: 0.78rem;
+    color: var(--accent2); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1.1rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-greeting::before {
+    content: ''; display: inline-block;
+    width: 26px; height: 1px; background: var(--accent2);
+  }
+
+  .hero-name {
+    font-family: 'Merriweather', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 0.5rem; color: var(--text);
+  }
+  .hero-name span { color: var(--tamu); }
+
+  .hero-role {
+    font-size: 0.92rem; color: var(--muted);
+    font-weight: 400; margin-bottom: 1.4rem;
+  }
+
+  .hero-bio {
+    font-size: 0.94rem; color: var(--muted);
+    max-width: 490px; line-height: 1.85; margin-bottom: 2rem;
+  }
+
+  .howdy { color: var(--tamu); font-weight: 700; transition: color 0.3s; }
+
+  .hero-links { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+
+  /* PHOTO */
+  .hero-photo { width: 200px; flex-shrink: 0; }
+  .photo-frame {
+    width: 200px; height: 240px; border-radius: 10px;
+    overflow: hidden; border: 1px solid var(--border);
+    background: var(--bg2); transition: border-color 0.3s, background 0.3s;
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.6rem;
+  }
+  .photo-placeholder-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--bg3); transition: background 0.3s;
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+  .photo-placeholder p {
+    font-size: 0.73rem; font-family: 'DM Mono', monospace;
+    color: var(--muted); letter-spacing: 0.05em;
+    text-align: center; line-height: 1.5;
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.3rem; border-radius: 5px;
+    font-size: 0.83rem; font-weight: 500; text-decoration: none;
+    letter-spacing: 0.02em; transition: all 0.2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-txt);
+    border-color: var(--btn-primary-bg);
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline { background: transparent; color: var(--text); border-color: var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .contact-chip {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    color: var(--muted); padding: 0.48rem 0.9rem;
+    border: 1px solid var(--border); border-radius: 5px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .contact-chip:hover { color: var(--text); border-color: var(--accent); }
+
+  /* SECTIONS */
+  section {
+    padding: 5rem 2.5rem;
+    max-width: 900px; margin: 0 auto;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* EDUCATION */
+  .edu-item {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 0.4rem 2rem; padding: 1.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-degree {
+    font-family: 'Merriweather', serif; font-size: 1rem;
+    font-weight: 700; color: var(--text); margin-bottom: 0.25rem;
+  }
+  .edu-school { font-size: 0.87rem; margin-bottom: 0.2rem; }
+  .edu-school a {
+    color: var(--accent2); text-decoration: none; transition: color 0.2s;
+  }
+  .edu-school a:hover { text-decoration: underline; }
+  .edu-meta { font-size: 0.8rem; color: var(--muted); }
+  .edu-gpa {
+    font-family: 'DM Mono', monospace; font-size: 1.05rem;
+    font-weight: 500; color: var(--accent);
+    white-space: nowrap; text-align: right; align-self: start;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.3rem;
+  }
+  .skill-group {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.3rem;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .skill-group-title {
+    font-family: 'DM Mono', monospace; font-size: 0.67rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 0.9rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .tag {
+    background: var(--tag-bg); color: var(--tag-text);
+    font-size: 0.75rem; font-family: 'DM Mono', monospace;
+    padding: 0.28rem 0.65rem; border-radius: 3px;
+    border: 1px solid rgba(154,111,46,0.18);
+    transition: background 0.3s, color 0.3s;
+  }
+  [data-theme="dark"] .tag { border-color: rgba(200,169,110,0.2); }
+  .tag.teal {
+    background: var(--tag-teal-bg); color: var(--tag-teal-text);
+    border-color: rgba(45,122,99,0.15);
+  }
+  [data-theme="dark"] .tag.teal { border-color: rgba(126,184,164,0.2); }
+
+  /* EXPERIENCE */
+  .exp-item { padding: 2rem 0; border-bottom: 1px solid var(--border); }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.4rem; flex-wrap: wrap;
+  }
+  .exp-title {
+    font-family: 'Merriweather', serif; font-size: 1rem;
+    font-weight: 700; color: var(--text);
+  }
+  .exp-company { font-size: 0.87rem; margin-bottom: 0.2rem; }
+  .exp-company a {
+    color: var(--accent); text-decoration: none; transition: opacity 0.2s;
+  }
+  .exp-company a:hover { opacity: 0.75; text-decoration: underline; }
+  .exp-period {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); white-space: nowrap;
+  }
+  .exp-list {
+    margin-top: 0.9rem; list-style: none;
+    display: flex; flex-direction: column; gap: 0.55rem;
+  }
+  .exp-list li {
+    font-size: 0.88rem; color: var(--muted);
+    padding-left: 1.3rem; position: relative; line-height: 1.75;
+  }
+  .exp-list li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--accent); font-size: 0.7rem; top: 5px;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.4rem;
+  }
+  .project-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s, background 0.3s;
+    text-decoration: none; display: block; color: inherit;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .project-lang {
+    font-family: 'DM Mono', monospace; font-size: 0.67rem;
+    color: var(--accent2); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .project-name {
+    font-family: 'Merriweather', serif; font-size: 0.95rem;
+    font-weight: 700; color: var(--text); margin-bottom: 0.7rem;
+  }
+  .project-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.75; }
+  .project-link-hint {
+    margin-top: 1rem; font-size: 0.74rem;
+    font-family: 'DM Mono', monospace; color: var(--accent);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .project-card:hover .project-link-hint { opacity: 1; }
+
+  /* PUBLICATION */
+  .pub-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0; padding: 1.5rem;
+    text-decoration: none; display: block; color: inherit;
+    transition: transform 0.2s, background 0.3s, border-color 0.3s;
+  }
+  .pub-card:hover { transform: translateX(3px); }
+  .pub-title {
+    font-family: 'Merriweather', serif; font-size: 0.96rem;
+    font-weight: 700; color: var(--text); margin-bottom: 0.5rem;
+  }
+  .pub-meta { font-size: 0.79rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .pub-link-hint {
+    margin-top: 0.65rem; font-size: 0.74rem;
+    font-family: 'DM Mono', monospace; color: var(--accent);
+  }
+
+  /* ACTIVITIES */
+  .extras-list { display: flex; flex-direction: column; gap: 0.85rem; }
+  .extra-item { display: flex; align-items: center; gap: 1rem; font-size: 0.88rem; color: var(--muted); }
+  .extra-item::before { content: '◆'; color: var(--accent); font-size: 0.46rem; flex-shrink: 0; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); letter-spacing: 0.05em;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* RESPONSIVE */
+  @media (max-width: 660px) {
+    nav { padding: 1rem 1.4rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-photo { order: -1; }
+    .photo-frame { width: 120px; height: 144px; }
+    section { padding: 3.5rem 1.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .edu-item { grid-template-columns: 1fr; }
+    .edu-gpa { text-align: left; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text > * { animation: fadeUp 0.65s ease both; }
+  .hero-text > *:nth-child(1) { animation-delay: 0.10s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.20s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.30s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.40s; }
+  .hero-text > *:nth-child(5) { animation-delay: 0.50s; }
+  .hero-photo { animation: fadeUp 0.65s ease both; animation-delay: 0.30s; }
+</style>
+</head>
 <body>
-    <div class="navbar">
-        <ul>
-            <!-- <li id="logo"><img src="../images/ma.png" alt="logo"></li> -->
-            <!-- <img src="../images/ma.png" alt="logo" width="50" height="50"> -->
-            <li><a href="#skills">スキル</a></li>
-            <li><a href="#certifications">認定</a></li>
-            <li><a href="#projects">プロジェクト</a></li>
-            <li><a href="#contact   ">コンタクト</a></li>
-        </ul>
-    </div>
-    <div class="main-container">
-        <div class="pic"></div>
-        <div class="intro">
-            <h1>こんにちは、インドのマナス・オハラです</h1>私は情熱的なプログラマーであり、新しい技術を学ぶことに熱心です。 現在、MIT-WPU でコンピューター サイエンスの修士号を取得しようとしています。
-            私の興味はソフトウェア開発です。
-        </div>
-    </div>
-    <!-- <hr style="width: 100vw; height: 20px; margin-top: 20px;"> -->
-    <p class="atribute-heading"id="skills" ><u>スキル:</u></p>
-    <div class="skill-container" >
-        <div class="box">
-            <img class="skill-icons" src="./images/c.png">
-            <!-- <p>C Programming</p> -->
-        </div>
-        <div class="box">
-            <img class="skill-icons" src="./images/c++.png">
-            <!-- <p>C++ Programming</p> -->
-        </div>
-        <div class="box">
-            <img class="skill-icons" src="./images/java.png">
-            <!-- <p>Core JAVA</p> -->
-        </div>
-        <div class="box">
-            <img class="skill-icons" src="./images/mysql.png">
-            <!-- <p>MY-SQL</p> -->
-        </div>
-        <div class="box">
-            <img class="skill-icons" src="./images/dsa.png">
-            <!-- <p>Data Structures</p> -->
-        </div>
-        <div class="box">
-            <img class="skill-icons" src="./images/wb.png">
-            <!-- <p>HTML , CSS</p> -->
-        </div>
-    </div>
-    <p class="atribute-heading" id="certifications"><u>認定:</u></p>
-    <div class="skill-container">
-        <div class="box">
-            <div class="container">
-                <img src="./images/hr.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="https://www.hackerrank.com/certificates/3c4a1c42fb2c" target="_blank">Hackerrank
-                            SQL(Basic)</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/hr.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="https://www.hackerrank.com/certificates/036470e6f44f" target="_blank">Hackerrank
-                            JAVA(Basic)</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/mitwpu.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a
-                            href="./images/codestrom.jpg" target="_blank">TexyPhyr(Codestrom)</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/mitwpu.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a
-                            href="./images/querysense.jpg" target="_blank">TexyPhyr(QuerySense)</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/gdsc.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="./images/gdsc-certificate.jpg" target="_blank">GDSC </a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/udemy.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="https://www.udemy.com/certificate/UC-996ddd88-d58c-4c68-813d-fe56c2113211/" target="_blank">Udemy JAVA</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <p class="atribute-heading" id="other_certifications"><u>その他の認定:</u></p>
-    <div class="skill-container">
-        <div class="box">
-            <div class="container">
-                <img src="./images/tcs.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="./images/tcs-certificate.png" target="_blank">TCS ion
-                            Communication certificate</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/jlpt.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="./images/N5.jpg" target="_blank">JLPT N5</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/lokmat.png" alt="Avatar" class="image" style="width:100%">
-                <div class="middle">
-                    <div class="text"><a href="./images/lokmat-certificate.jpg" target="_blank">Lokmat Marathon</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <p class="atribute-heading" id="projects"><u>プロジェクト:</u></p>
-    <div class="skill-container">
-        <div class="box">
-            <div class="container">
-                <img src="./images/github.png" alt="Avatar" class="image" style="width:50%">
-                <div class="middle">
-                    <div class="text"><a href="https://www.hackerrank.com/certificates/3c4a1c42fb2c">Customized Virtual
-                            File System</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/github.png" alt="Avatar" class="image" style="width:50%">
-                <div class="middle">
-                    <div class="text"><a href="https://github1s.com/manasohara1/Generic-Data-Structures" target="_blank">Generalized Data
-                            Structures</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/github.png" alt="Avatar" class="image" style="width:50%">
-                <div class="middle">
-                    <div class="text"><a href="https://github1s.com/manasohara1/Customized-Virtual-Student-Database" target="_blank">Customized
-                            Virtual Database</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="container">
-                <img src="./images/github.png" alt="Avatar" class="image" style="width:50%">
-                <div class="middle">
-                    <div class="text"><a href="https://github1s.com/manasohara1/Lodge-Management-System" target="_blank">Lodge Management
-                            System</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-        <p class="atribute-heading" id="contact">
-            <u>私に連絡して</u>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Manas Ohara</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle dark/light mode">
+      <span class="toggle-icon sun">&#9728;&#65039;</span>
+      <span class="toggle-icon moon">&#127769;</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="border-top:none; padding-top:0;">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-greeting">Software Developer</div>
+        <h1 class="hero-name">Manas <span>Ohara</span></h1>
+        <p class="hero-role">Backend Development &nbsp;&middot;&nbsp; REST APIs &nbsp;&middot;&nbsp; Insurance Domain</p>
+        <p class="hero-bio">
+          <span class="howdy">Howdy!</span> Incoming Aggie pursuing MS-MIS at Texas A&amp;M University.
+          I am a Software Developer with hands-on experience building enterprise backend systems using
+          Java and Spring Boot, primarily in the insurance domain. I have worked across the full
+          development lifecycle &mdash; from RESTful API design and rule-based workflows to UAT and
+          production support &mdash; collaborating closely with business and QA teams. I enjoy working
+          at the intersection of technical and business problem-solving, and have taken on mentoring
+          and onboarding responsibilities along the way. I hold an MSc (9.72/10) and BSc (9.58/10)
+          in Computer Science from MIT-WPU, Pune.
         </p>
-        <ul>
-            <li><img src="images/location.png" alt="location" style="height: 50px;">
-                <as class="footer-text">Pune,India</a>
-            </li>
-            <li><img src="images/phone.png" alt="Phone" style="height: 50px;">
-                <a class="footer-text" href="tel:+919511646396">+91 9511646396</a>
-            </li>
-            <li><img src="images/mail.png" alt="location" style="height: 50px;">
-                <a class="footer-text" href="mailto:manasoharak@gmail.com">manasoharak@gmail.com</a>
-            </li>
-        </ul>
-        <div class="last-block">
-            <p>All rights reserved &copy;Manas Ohara</p>
+        <div class="hero-links">
+          <a href="mailto:manasoharak&#64;gmail.com" class="btn btn-primary">Get in touch</a>
+          <a href="https://www.linkedin.com/in/manasohara/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+          <a href="https://github.com/manasohara1" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+          <a href="tel:+919511646396" class="contact-chip">+91 95116 46396</a>
         </div>
+      </div>
+
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <img src="ManasOharaPhoto.jpg" alt="Manas Ohara">
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education</div>
+
+  <div class="edu-item">
+    <div>
+      <div class="edu-degree">Master's in Computer Science</div>
+      <div class="edu-school">
+        <a href="https://mitwpu.edu.in/" target="_blank" rel="noopener">
+          Dr. Vishwanath Karad MIT World Peace University (MIT-WPU)
+        </a>
+      </div>
+      <div class="edu-meta">Pune, India &nbsp;&middot;&nbsp; June 2021 &ndash; May 2023</div>
+    </div>
+    <div class="edu-gpa">9.72 <span style="font-size:0.6rem; color:var(--muted)">/10</span></div>
+  </div>
+
+  <div class="edu-item">
+    <div>
+      <div class="edu-degree">Bachelor's in Computer Science</div>
+      <div class="edu-school">
+        <a href="https://mitwpu.edu.in/" target="_blank" rel="noopener">
+          Dr. Vishwanath Karad MIT World Peace University (MIT-WPU)
+        </a>
+      </div>
+      <div class="edu-meta">Pune, India &nbsp;&middot;&nbsp; June 2018 &ndash; May 2021</div>
+    </div>
+    <div class="edu-gpa">9.58 <span style="font-size:0.6rem; color:var(--muted)">/10</span></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">C</span>
+        <span class="tag">C++</span>
+        <span class="tag">SQL</span>
+        <span class="tag">HTML</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Frameworks &amp; Libraries</div>
+      <div class="skill-tags">
+        <span class="tag">Spring Boot</span>
+        <span class="tag">JPA</span>
+        <span class="tag">Hibernate</span>
+        <span class="tag">MVEL</span>
+        <span class="tag">REST API</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Databases</div>
+      <div class="skill-tags">
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">DBeaver</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools &amp; Platforms</div>
+      <div class="skill-tags">
+        <span class="tag teal">Git</span>
+        <span class="tag teal">Kubernetes</span>
+        <span class="tag teal">New Relic</span>
+        <span class="tag teal">JMeter</span>
+        <span class="tag teal">Azure DevOps</span>
+        <span class="tag teal">Angular</span>
+        <span class="tag teal">Azure Portal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-title">Software Developer</div>
+        <div class="exp-company">
+          <a href="https://metamorphtech.com/" target="_blank" rel="noopener">
+            MetaMorphoSys Technologies &middot; Pune, India &#8599;
+          </a>
+        </div>
+      </div>
+      <div class="exp-period">Jan 2024 &ndash; Present</div>
+    </div>
+    <ul class="exp-list">
+      <li>Enhanced and maintained key REST APIs (Auto Adjudication, FNOL, Plan Code to Coverage Mapping, Document Check) for Manulife Vietnam and Indonesia, aligning with evolving business logic and regional insurance regulations.</li>
+      <li>Integrated Policy and Claim History data into core API workflows, eliminating redundant API dependencies and increasing automation reliability across two markets.</li>
+      <li>Delivered full localization support with Vietnamese translations for ICD codes and dynamic Plan Code and Document Check rule messages, improving UX and reducing BA support queries.</li>
+      <li>Improved claims routing accuracy by adding provider (hospital) status update functionality while onboarding new providers.</li>
+      <li>Collaborated with the Business Analyst team for L2 issue analysis across UAT, Pre-Prod, and Production environments using New Relic for real-time log tracing and debugging.</li>
+      <li>Conducted technical onboarding and training sessions for junior BAs on structured rule debugging workflows and SQL-based Policy/Claim History data entry, reducing developer dependency and speeding up UAT cycles.</li>
+    </ul>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-title">Software Developer Intern</div>
+        <div class="exp-company">
+          <a href="https://metamorphtech.com/" target="_blank" rel="noopener">
+            MetaMorphoSys Technologies &middot; Pune, India &#8599;
+          </a>
+        </div>
+      </div>
+      <div class="exp-period">Jun 2023 &ndash; Dec 2023</div>
+    </div>
+    <ul class="exp-list">
+      <li>Contributed to the company's in-house Rule Engine product by implementing logic to eliminate duplicate rule messages from JSON responses, improving response clarity and reducing debugging effort.</li>
+      <li>Worked with REST API, Spring Boot, Hibernate (JPA), Java Reflections, MVEL, and DBeaver while navigating large-scale enterprise codebases and performing local DB operations.</li>
+      <li>Used New Relic for application log tracking and performance monitoring, improving issue resolution time and code reliability.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <div class="projects-grid">
+
+    <a class="project-card" href="https://github.com/manasohara1/Customized-Virtual-Student-Database" target="_blank" rel="noopener">
+      <div class="project-lang">Java</div>
+      <div class="project-name">Customized Virtual Database</div>
+      <div class="project-desc">A virtual database system mimicking core DBMS functionalities &mdash; custom SQL parser supporting SELECT, INSERT, DELETE, UPDATE with constraints and aggregate functions. Built a lightweight CLI shell backed by file handling and Java collections for persistent storage.</div>
+      <div class="project-link-hint">View on GitHub &rarr;</div>
+    </a>
+
+    <a class="project-card" href="https://github.com/manasohara1/Generic-Data-Structures" target="_blank" rel="noopener">
+      <div class="project-lang">C++</div>
+      <div class="project-name">Generalized Data Structures Library</div>
+      <div class="project-desc">A reusable, template-based library of generic data structures &mdash; arrays, linked lists, stacks, queues, trees, and graphs. Designed with OOP principles for modularity and extensibility, supporting generic data types across applications.</div>
+      <div class="project-link-hint">View on GitHub &rarr;</div>
+    </a>
+
+    <a class="project-card" href="https://github.com/manasohara1/Customized-Virtual-File-System" target="_blank" rel="noopener">
+      <div class="project-lang">C</div>
+      <div class="project-name">Customized Virtual File System</div>
+      <div class="project-desc">A lightweight virtual file system emulating Linux file operations with IIT, File Table, UAREA, and UFDT. Features a custom shell supporting essential file system commands, enabling execution on non-Linux platforms.</div>
+      <div class="project-link-hint">View on GitHub &rarr;</div>
+    </a>
+
+    <a class="project-card" href="https://github.com/manasohara1/Lodge-Management-System" target="_blank" rel="noopener">
+      <div class="project-lang">Java &middot; MySQL</div>
+      <div class="project-name">Lodge Management System</div>
+      <div class="project-desc">A desktop application for lodge operations using Java Swing and JDBC. Features room booking, check-in/check-out tracking, and basic reporting with MySQL for persistent storage of room, guest, and booking data.</div>
+      <div class="project-link-hint">View on GitHub &rarr;</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- PUBLICATION -->
+<section id="publication">
+  <div class="section-label">Publication</div>
+  <a class="pub-card" href="https://vidhyayanaejournal.org/index.php/journal/article/view/816/900" target="_blank" rel="noopener">
+    <div class="pub-title">Driver Drowsiness Detection Using InceptionV3 with Automatic WhatsApp Message Sender</div>
+    <div class="pub-meta" style="margin-top:0.5rem;">Manas Ohara, Chaitali Gadekar &nbsp;&middot;&nbsp; May 2023</div>
+    <div class="pub-link-hint">Read paper &rarr;</div>
+  </a>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="section-label">Activities &amp; Achievements</div>
+  <div class="extras-list">
+    <div class="extra-item">Completed Japanese Government Language Proficiency Test &mdash; JLPT N5</div>
+    <div class="extra-item">Participated in College Level Idealathon</div>
+    <div class="extra-item">Participated in College Level &lsquo;Codestorm&rsquo; Event</div>
+    <div class="extra-item">Participated in College Level &lsquo;QuerySense&rsquo; Event</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <p style="font-size:0.94rem; color:var(--muted); margin-bottom:1.6rem; max-width:420px;">
+    Open to new opportunities, collaborations, or just a conversation. Reach out any time.
+  </p>
+  <div style="display:flex; flex-wrap:wrap; gap:0.9rem; align-items:center;">
+    <a href="mailto:manasoharak&#64;gmail.com" class="btn btn-primary">manasoharak&#64;gmail.com</a>
+    <a href="https://www.linkedin.com/in/manasohara/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+    <a href="https://github.com/manasohara1" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Manas Ohara &nbsp;&middot;&nbsp; Pune, India &nbsp;&middot;&nbsp;
+    <a href="mailto:manasoharak&#64;gmail.com">manasoharak&#64;gmail.com</a>
+  </p>
+</footer>
+
+<script>
+  (function () {
+    var html = document.documentElement;
+    var btn  = document.getElementById('themeBtn');
+
+    // Restore saved preference on load
+    var saved = localStorage.getItem('portfolioTheme');
+    if (saved === 'dark' || saved === 'light') {
+      html.setAttribute('data-theme', saved);
+    }
+
+    btn.addEventListener('click', function () {
+      var current = html.getAttribute('data-theme');
+      var next    = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('portfolioTheme', next);
+    });
+  })();
+</script>
 
 </body>
-
 </html>
